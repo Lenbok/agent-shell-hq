@@ -31,6 +31,12 @@ One of `top', `bottom', `left', `right'."
   "Maximum height of the peek posframe in rows."
   :type 'integer)
 
+(defcustom agent-shell-hq-peek-parameters nil
+  "Extra frame parameters used by the peek posframe.
+Passed through to `posframe-show' as its OVERRIDE-PARAMETERS
+argument, e.g. to set (background-color . \"black\")."
+  :type '(alist :key-type symbol :value-type sexp))
+
 ;;;; Faces
 
 (defface agent-shell-hq-peek-project
@@ -385,7 +391,8 @@ n/p navigates, RET selects, g/q/C-g quits."
                    :max-height            agent-shell-hq-peek-height
                    :internal-border-width 4
                    :border-color          (face-foreground 'shadow nil t)
-                   :accept-focus          t)
+                   :accept-focus          t
+                   :override-parameters   agent-shell-hq-peek-parameters)
     (agent-shell-hq-peek--preview-current)
     (let ((pf-frame (buffer-local-value 'posframe--frame
                                         (get-buffer agent-shell-hq-peek--buffer-name))))
